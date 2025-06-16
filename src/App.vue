@@ -2,6 +2,7 @@
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
 import TransactionUploader from './components/TransactionUploader.vue';
+import Upcoming from './components/Upcoming.vue';
 </script>
 
 <template>
@@ -9,15 +10,22 @@ import TransactionUploader from './components/TransactionUploader.vue';
     <div class="transaction-table">
       <TransactionUploader />
     </div>
+    <div class="upcoming">
+      <Upcoming />
+    </div>
   </div>
 </template>
 
 <style scoped>
 
 
-.transaction-table {
+.wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: row;
   width: 100%;
-  padding: 1rem;
+  padding-right: 1rem;
+  align-content: right;
 }
 
 </style>

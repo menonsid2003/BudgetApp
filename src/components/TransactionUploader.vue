@@ -16,9 +16,9 @@
                         <thead>
                             <tr>
                                 <th style="width: 6%;">Date</th>
-                                <th style="width: 45%;">Description</th>
+                                <th style="width: 40%;">Description</th>
                                 <th style="width: 15%;">Category</th>
-                                <th style="width: 6%; text-align: right;">Amount</th>
+                                <th style="width: 8%; text-align: right;">Amount</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -39,6 +39,7 @@
 <script setup lang="ts">
 import Papa from 'papaparse';
 import { computed, ref } from 'vue';
+import { useTransactionStore } from '@/stores/transactionStore';
 
 /// Define the Transaction interface to represent the structure of each transaction
 interface Transaction {
@@ -48,6 +49,7 @@ interface Transaction {
     amount: number;
 }
 
+const store = useTransactionStore();
 const transactions = ref<Transaction[]>([]);
 const visibleCount = ref(12); // Display 12 transactions by default
 
@@ -88,6 +90,7 @@ function handleFileUpload(event: Event) {
             transactions.value = parsed.filter((transaction) => transaction.date && transaction.description && transaction.category && !isNaN(transaction.amount));
         }
     })
+    store.setTransactions(transactions.value);
 }
 
 </script>
@@ -95,17 +98,21 @@ function handleFileUpload(event: Event) {
 <style scoped>
 .page-wrapper {
     position: relative;
-    width: 65vw;
+    display: flex;
+    flex-direction: column;
+    width: 50vw;
     height: 80vh;
     color: rgb(214, 214, 214);
+    padding: 1rem;
     box-sizing: border-box;
 }
 
 .transaction-uploader {
-    width: 100%;
+    width: 90%;
     height: 100%;
     display: flex;
     flex-direction: column;
+    padding: 1rem;
 }
 
 .table-box {
@@ -150,9 +157,10 @@ td {
     height: 2.5rem;
 }
 
-.amount{
+.amount {
     text-align: right;
 }
+
 .amount.positive {
     color: green;
 }
